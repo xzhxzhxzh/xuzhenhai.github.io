@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多物体运动</title>
+		<style type="text/css">
+			body,div,ul,li{
+				margin: 0;
+				padding: 0;
+			}
+			ul,li{
+				list-style: none;
+			}
+			ul li{
+				width: 200px;
+				height: 100px;
+				background-color: yellow;
+				margin-bottom: 20px;
+				filter: alpha(opacity:30);
+				opacity: 0.3;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var oLi = document.getElementsByTagName("li");
+				for(var i = 0;i < oLi.length;i++){
+					oLi[i].alpha = 30;
+					oLi[i].timer = null;
+					oLi[i].onmouseover = function(){
+						startMove(this,400,100);
+					}
+					oLi[i].onmouseout = function(){
+						startMove(this,200,30);
+					}
+				}
+				
+			}
+//			var timer = null;
+			function startMove(obj,iTarget,oTarget){
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					var speed = (iTarget - obj.offsetWidth)/10;
+					speed = speed>0?Math.ceil(speed):Math.floor(speed);
+					if(obj.offsetWidth == iTarget){
+						clearInterval(obj.timer);
+					}else{
+						obj.style.width = obj.offsetWidth + speed + "px";
+					}
+					var o_speed = 0;
+					if(obj.alpha > oTarget){
+						o_speed = -10;
+					}else{
+						o_speed = 10;
+					}					
+					if(obj.alpha == oTarget){
+						clearInterval(obj.timer);
+					}else{
+						obj.alpha += o_speed;
+						obj.style.filter = "alpha(opacity:" + obj.alpha + ")";
+						obj.style.opacity = obj.alpha /100;
+					}
+				},30)
+			}
+		</script>
+	</head>
+	<body>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</body>
+</html>

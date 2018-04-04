@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多物体运动</title>
+		<style type="text/css">
+			body,div,ul,li{
+				margin: 0;
+				padding: 0;
+			}
+			ul,li{
+				list-style: none;
+			}
+			ul li{
+				width: 200px;
+				height: 100px;
+				background-color: yellow;
+				margin-bottom: 20px;
+				filter: alpha(opacity:30);
+				opacity: 0.3;
+				border: 2px solid #000;
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var oLi = document.getElementsByTagName("li");
+				for(var i = 0;i < oLi.length;i++){
+					oLi[i].timer = null;
+					oLi[i].onmouseover = function(){
+						startMove(this,400);
+					}
+					oLi[i].onmouseout = function(){
+						startMove(this,200);
+					}
+				}
+
+
+			}
+			var alpha = 30;
+//			var timer = null;
+			function startMove(obj,iTarget){
+				clearInterval(obj.timer);
+				obj.timer = setInterval(function(){
+					var icur = parseInt(getStyle(obj,"width"));
+					var speed = (iTarget - icur)/10;
+					speed = speed>0?Math.ceil(speed):Math.floor(speed);
+					if(icur == iTarget){
+						clearInterval(obj.timer);
+					}else{
+//						obj.style.width = icur + speed + "px";
+						obj.style["width"] = icur + speed + "px";
+					}
+				},30)
+			}
+			function getStyle(obj,attr){
+				if(obj.currentStyle){
+					return obj.currentStyle;
+				}else{
+					return getComputedStyle(obj,false)[attr];
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</body>
+</html>

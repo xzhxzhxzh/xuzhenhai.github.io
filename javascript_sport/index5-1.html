@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			#div1{
+				width: 200px;
+				height: 200px;
+				background-color: #FF0000;
+				/*border: 1px solid #FFFF00;*/
+				color: #fff;
+				opacity: 30;
+				/*font-size: 12px;*/
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				startMove();
+			}
+			function  startMove(){
+				setInterval(function(){
+					var oDiv = document.getElementById("div1");
+//					alert(oDiv.style.width);					
+//					oDiv.style.width = parseInt(getStyle(oDiv,"width"))-1 + "px";	//获取oDiv.style.width == 200px
+					oDiv.style.fontSize = parseInt(getStyle(oDiv,"fontSize"))+1 + "px";
+//					oDiv.style.opacity = parseInt(getStyle(oDiv,"opacity")) + 1;
+				},30)
+			}
+			function getStyle(obj,attr){	//获取样式 current针对ie浏览器 getComputedStyle 针对Firefox浏览器
+				if(obj.currentStyle){
+					return obj.currentStyle[attr];
+				}else{
+					return getComputedStyle(obj,false)[attr];
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="div1">font-size</div>
+	</body>
+</html>

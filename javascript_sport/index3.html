@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			body,div,span{
+				margin: 0;
+				padding: 0;
+			}
+			#div1{
+				width: 200px;
+				height: 200px;
+				background-color: red;
+				position: relative;
+				left: -200px;
+				top: 0;
+			}
+			#div1 span{
+				width: 20px;
+				height: 50px;
+				background-color: blue;
+				position: absolute;
+				left: 200px;
+				top: 75px
+			}
+		</style>
+		<script>
+			window.onload = function(){
+				var oDiv =document.getElementById("div1");
+				oDiv.onmouseover = function(){
+					startMove(0);
+				}
+				oDiv.onmouseout = function(){
+					startMove(-200);
+				}
+			}
+			var timer = null;
+//			function startMove(speed,iTarget){
+//				clearInterval(timer);				//避免一直重开定时器，一进来stratMove就清掉
+//				var oDiv = document.getElementById("div1");
+//				timer = setInterval(function(){
+//					if(oDiv.offsetLeft == iTarget){
+//						clearInterval(timer);							//关闭计时器
+//					}else{
+//						oDiv.style.left = oDiv.offsetLeft + speed + "px";	//offsetLeft当前位置的值
+//					}					
+//				},30)
+//			}
+
+			function startMove(iTarget){
+				clearInterval(timer);
+				var oDiv = document.getElementById("div1");			
+				timer = setInterval(function(){
+					var speed = (iTarget - oDiv.offsetLeft) / 10;
+					speed = speed > 0?Math.ceil(speed):Math.floor(speed);	//Math.ceil()向上取整 Math.floor()向下取整
+					if(oDiv.offsetLeft == iTarget){
+						clearInterval(timer);
+					}else{
+						oDiv.style.left = oDiv.offsetLeft + speed + "px";
+					}
+				},30);
+			}
+		</script>
+	</head>
+	<body>
+		<div id="div1">
+			<span id="share">分享</span>
+		</div>
+	</body>
+</html>
